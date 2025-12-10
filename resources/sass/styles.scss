@@ -1,0 +1,170 @@
+@import 'custom';
+
+@import "~bootstrap/scss/bootstrap";
+
+$size-container: 1000px;
+$size-card-width: 300px;
+$padding-20: 20px;
+$size-200: 200px;
+$size-50: 50px;
+$size-40: 40px;
+$size-100: 100px;
+$size-5: 5px;
+$size-30: 30px;
+$size-10: 10px;
+
+$color-page-bg: #B6AD90;
+$color-header-bg: #656D4A;
+$color-card-bg-base: #A68A64;
+$color-text-main: #333;
+$color-text-light: white;
+$h-font: 'Courier New', Courier, monospace;
+$main-font: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+// Миксин для стилизации карточки
+// Используем глобальные функции Sass
+@mixin card-style($bg-color, $text-color) {
+    background-color: $bg-color;
+    color: $text-color;
+    border: 1px solid adjust-color($bg-color, $lightness: -10%);
+
+    h3 {
+        color: $text-color;
+    }
+
+    p {
+        color: adjust-color($text-color, $lightness: -20%);
+    }
+
+    .overlay-text {
+        background-color: $color-text-light;
+        color: $color-text-main;
+    }
+}
+
+body {
+    background-color: $color-page-bg;
+    font-family: $main-font;
+
+    span {
+        font-weight: bold;
+    }
+}
+
+.navbar {
+    background-color: $color-header-bg !important;
+    padding: 10px 0;
+
+    .navbar-brand {
+        font-family: $h-font;
+        color: $color-text-light !important;
+    }
+
+    .btn-outline-success {
+        border-color: $color-card-bg-base;
+        background-color: $color-card-bg-base;
+        color: $color-text-light;
+        font-weight: bold;
+        height: $size-40;
+        width: $size-100;
+        border-radius: $size-5;
+
+        &:hover,
+        &:focus {
+            background-color: adjust-color($color-card-bg-base, $lightness: -5%);
+            border-color: adjust-color($color-card-bg-base, $lightness: -5%);
+        }
+    }
+}
+
+.container {
+    h1 {
+        margin-bottom: $padding-20;
+        color: $color-text-main;
+        font-family: $h-font;
+        text-align: center;
+    }
+
+    .card {
+        position: relative;
+        padding: $padding-20;
+        background-color: $color-card-bg-base;
+        color: $color-text-main;
+        border: 1px solid adjust-color($color-card-bg-base, $lightness: -10%);
+
+        h3, h5 {
+            color: $color-text-main;
+            font-family: $h-font;
+        }
+
+        p {
+            color: adjust-color($color-text-main, $lightness: -20%);
+        }
+
+        .overlay-text {
+            position: absolute;
+            top: $size-30;
+            left: $size-30;
+            text-align: center;
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-family: $h-font;
+            z-index: 1;
+        }
+
+        .card-img-top {
+            height: $size-200;
+            object-fit: cover;
+        }
+    }
+
+    // Цикл для изменения цветов карточек
+    $num-color-steps: 5;
+    $max-darken: 20;
+    $step-intensity: $max-darken / ($num-color-steps - 1);
+
+    @for $i from 1 through $num-color-steps {
+        $intensity: ($i - 1) * $step-intensity;
+        $card-bg: adjust-color($color-card-bg-base, $lightness: -$intensity);
+        .card-wrapper:nth-child(#{$num-color-steps}n + #{$i}) .card {
+            background-color: $card-bg;
+            color: $color-text-light;
+            border-color: adjust-color($card-bg, $lightness: -10%);
+
+            h3, h5 {
+                color: $color-text-light;
+            }
+
+            p {
+                color: adjust-color($color-text-light, $lightness: -20%);
+            }
+
+            .overlay-text {
+                background-color: $color-text-light;
+                color: $color-text-main;
+            }
+        }
+    }
+}
+
+.footer-bg {
+    padding: 15px 0;
+    border-top: 3px solid $color-header-bg;
+
+    .container {
+        p {
+            margin: 0;
+            color: $color-text-main;
+        }
+    }
+}
+
+.fa-github, .fa-envelope {
+    color: $color-text-main;
+
+    &:hover {
+        color: adjust-color($color-text-main, $lightness: -20%);
+    }
+}
+
